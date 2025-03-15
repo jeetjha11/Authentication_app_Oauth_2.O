@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-btn, .social-btn, .auth-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+        }
+        .login-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+        .google-btn {
+            background-color: #DB4437;
+            color: white;
+        }
+        .facebook-btn {
+            background-color: #3B5998;
+            color: white;
+        }
+        /* Authenticated User Section */
+        .auth-container {
+            margin-top: 20px;
+        }
+        .auth-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    {% load socialaccount %}
+
+    <div class="login-container">
+        {% if not user.is_authenticated %}
+            <h2>Login</h2>
+            <input type="text" class="input-box" placeholder="Email" required>
+            <input type="password" class="input-box" placeholder="Password" required>
+            <button class="login-btn">Login</button>
+            <p>or sign in with</p>
+            <button class="social-btn google-btn">
+                <a style="text-decoration: none; color: white;" href="{% provider_login_url 'google' %}?next=/">Sign in with Google</a>
+            </button>
+            <button class="social-btn facebook-btn">Sign in with Facebook</button>
+        {% else %}
+            <div class="auth-container">
+                <h2>Welcome, {{ user.username }}</h2>
+                <a href="dashboard" class="auth-btn">Go to Dashboard</a>
+                <a href="logout" class="auth-btn logout-btn">Logout</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
